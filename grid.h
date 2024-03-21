@@ -2,18 +2,16 @@
 #include"raylib.h"
 
 class Grid{
+
  public:
   Grid();
-  ~Grid(){}
   void Initialize();
   void PrintGrid();
-  void Draw();
-  
+  void DrawGrid();
   
  private:
-  int n_row;
-  int n_col;
-  int cellSize;
   int grid[20][10];
-
+  int g_Row;
+  int g_Col;
+  int cellSize;
 };

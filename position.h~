@@ -1,0 +1,10 @@
+#pragma once
+
+class Position{
+
+ public:
+  Position();
+ private:
+  int p_row;
+  int p_col;
+};

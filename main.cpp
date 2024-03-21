@@ -1,29 +1,38 @@
 #include"raylib.h"
 #include"grid.h"
+#include"blocks.cpp"
 
-#define row 20
-#define col 10
-#define size 30
-
+#define width 300
+#define height 600
 
 int main(){
-  InitWindow(col*size+100,row*size+100,"window");
+  InitWindow(width,height,"window");
   SetTargetFPS(60);
 
+
+  //bg color
+  Color background = {14,26,73};
+
+  //init grid
   Grid grid = Grid();
   grid.PrintGrid();
 
+  //init block
+  JBlock block = JBlock();
+  
   while(!WindowShouldClose()){
 
     //draw
     BeginDrawing();
-    ClearBackground(DARKBROWN);
+    ClearBackground(SKYBLUE);
 
-    grid.Draw();
-
+    grid.DrawGrid();
+    block.DrawBlock();
 
     EndDrawing();
   }
+  CloseWindow();
 
   return 0;
 }
+
