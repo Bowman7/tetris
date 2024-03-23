@@ -1,0 +1,8 @@
+#include"game.h"
+
+
+Game::Game(){
+  blocks = GetAllBlocks();
+  currentBlock = GetRandomBlock();
+  nextBlock = GetRandomBlock();
+}

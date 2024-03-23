@@ -1,5 +1,5 @@
 #include"block.h"
-
+#include<iostream>
 class JBlock : public Block{
 public:
   JBlock(){
@@ -8,5 +8,82 @@ public:
     cells[1] = {Position(0,0),Position(0,1),Position(1,0),Position(2,0)};
     cells[2] = {Position(0,0),Position(0,1),Position(0,2),Position(1,2)};
     cells[3] = {Position(0,1),Position(1,1),Position(2,0),Position(2,1)};
+    Move(0,3);
+  }
+};
+
+class OBlock : public Block{
+public:
+  OBlock(){
+    id = 2;
+    cells[0] = {Position(0,0),Position(0,1),Position(1,0),Position(1,1)};
+    cells[1] = {Position(0,0),Position(0,1),Position(1,0),Position(1,1)};
+    cells[2] = {Position(0,0),Position(0,1),Position(1,0),Position(1,1)};
+    cells[3] = {Position(0,0),Position(0,1),Position(1,0),Position(1,1)};
+    Move(0,3);
+  }
+};
+
+class IBlock : public Block{
+public:
+  IBlock(){
+    id = 3;
+    cells[0] = {Position(0,0),Position(1,0),Position(2,0),Position(3,0)};
+    cells[1] = {Position(0,0),Position(0,1),Position(0,2),Position(0,3)};
+    cells[2] = {Position(0,2),Position(1,2),Position(2,2),Position(3,2)};
+    cells[3] = {Position(2,0),Position(2,1),Position(2,2),Position(2,3)};
+    Move(0,3);
+  }
+};
+
+class SBlock : public Block{
+public:
+  SBlock(){
+    id = 4;
+    cells[0] = {Position(0,1),Position(0,2),Position(1,0),Position(1,1)};
+    cells[1] = {Position(0,1),Position(1,1),Position(1,2),Position(2,2)};
+    cells[2] = {Position(1,1),Position(1,2),Position(2,0),Position(2,1)};
+    cells[3] = {Position(1,0),Position(2,0),Position(2,1),Position(3,1)};
+    Move(0,3);
+  }
+};
+
+
+class ZBlock : public Block{
+public:
+  ZBlock(){
+    id = 5;
+    cells[0] = {Position(0,0),Position(0,1),Position(1,1),Position(1,2)};
+    cells[1] = {Position(0,2),Position(1,1),Position(1,2),Position(2,1)};
+    cells[2] = {Position(1,0),Position(1,1),Position(2,1),Position(2,2)};
+    cells[3] = {Position(0,1),Position(1,0),Position(1,1),Position(2,0)};
+    Move(0,3);
+  }
+};
+
+
+class LBlock : public Block{
+public:
+  LBlock(){
+    id = 6;
+    cells[0] = {Position(0,0),Position(1,0),Position(2,0),Position(2,1)};
+    cells[1] = {Position(0,0),Position(0,1),Position(0,2),Position(2,0)};
+    cells[2] = {Position(0,1),Position(0,2),Position(1,2),Position(2,2)};
+    cells[3] = {Position(2,0),Position(2,1),Position(2,2),Position(1,2)};
+    Move(0,3);
+  }
+};
+
+
+class TBlock : public Block{
+public:
+  TBlock(){
+    //std::cout<<"T block"<<std::endl;
+    id = 7;
+    cells[0] = {Position(0,0),Position(0,1),Position(0,2),Position(1,1)};
+    cells[1] = {Position(0,2),Position(1,1),Position(1,2),Position(2,2)};
+    cells[2] = {Position(1,1),Position(2,0),Position(2,1),Position(2,2)};
+    cells[3] = {Position(0,0),Position(1,0),Position(1,1),Position(2,0)};
+    Move(0,3);
   }
 };

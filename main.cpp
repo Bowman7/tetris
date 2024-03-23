@@ -1,6 +1,5 @@
 #include"raylib.h"
-#include"grid.h"
-#include"blocks.cpp"
+#include"game.h"
 
 #define width 300
 #define height 600
@@ -10,24 +9,19 @@ int main(){
   SetTargetFPS(60);
 
 
-  //bg color
-  Color background = {14,26,73};
-
-  //init grid
-  Grid grid = Grid();
-  grid.PrintGrid();
-
   //init block
-  JBlock block = JBlock();
-  
+  //JBlock block = JBlock();
+
+  Game game = Game();
   while(!WindowShouldClose()){
 
+    //handle input
+    game.HandleEvent();
     //draw
     BeginDrawing();
     ClearBackground(SKYBLUE);
-
-    grid.DrawGrid();
-    block.DrawBlock();
+    
+    game.GameDraw();
 
     EndDrawing();
   }
