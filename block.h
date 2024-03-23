@@ -9,7 +9,9 @@ public:
   Block();
   void DrawBlock();
   void Move(int,int);
-
+  void ChangeRotationState();
+  bool IsOutsideWindow();
+  void RevertRotationState();
 public:
   int id;//on this basis color is assigned
   std::map<int,std::vector<Position>>cells;
@@ -19,4 +21,6 @@ private:
   int RotationState;//the rotation states 
   std::vector<Color> colors;
   int cellSize;
+  int rowOffset;
+  int colOffset;
 };

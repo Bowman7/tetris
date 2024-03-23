@@ -16,6 +16,10 @@ class Game{
  private:
   int GetKeyboardInput();
   void MoveBlockDown();
+  void MoveBlockLeft();
+  void MoveBlockRight();
+  void MoveBlockUp();
+  void RotateBlock();
   
  private:
   std::vector<Block> blocks;

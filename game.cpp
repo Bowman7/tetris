@@ -18,7 +18,14 @@ void Game::HandleEvent(){
   switch(choice){
   case KEY_S:
     MoveBlockDown();break;
-    
+  case KEY_A:
+    MoveBlockLeft();break;
+  case KEY_D:
+    MoveBlockRight();break;
+  case KEY_SPACE:
+    RotateBlock();break;
+  case KEY_W:
+    MoveBlockUp();break;
   default:
     break;
   }
@@ -29,6 +36,18 @@ int Game::GetKeyboardInput(){
   if(IsKeyPressed(KEY_S)){
     return KEY_S;
   }
+  if(IsKeyPressed(KEY_A)){
+    return KEY_A;
+  }
+  if(IsKeyPressed(KEY_D)){
+    return KEY_D;
+  }
+  if(IsKeyPressed(KEY_SPACE)){
+    return KEY_SPACE;
+  }
+  if(IsKeyPressed(KEY_W)){
+    return KEY_W;
+  }
 
   return 0;
 }
@@ -36,7 +55,36 @@ int Game::GetKeyboardInput(){
 
 void Game::MoveBlockDown(){
   currentBlock.Move(1,0);
+  if(currentBlock.IsOutsideWindow()){
+    std::cout<<"Bblock outside in down"<<std::endl;
+    currentBlock.Move(-1,0);
+  }
 }
+void Game::MoveBlockLeft(){
+  currentBlock.Move(0,-1);
+  if(currentBlock.IsOutsideWindow()){
+    currentBlock.Move(0,1);
+  }
+}
+void Game::MoveBlockUp(){
+  currentBlock.Move(-1,0);
+  if(currentBlock.IsOutsideWindow()){
+    currentBlock.Move(1,0);
+  }
+}
+void Game::MoveBlockRight(){
+  currentBlock.Move(0,1);
+  if(currentBlock.IsOutsideWindow()){
+    currentBlock.Move(0,-1);
+  }
+}
+void Game::RotateBlock(){
+  currentBlock.ChangeRotationState();
+  if(currentBlock.IsOutsideWindow()){
+    currentBlock.ChangeRotationState();
+  }
+}
+
 void Game::GameDraw(){
   grid.DrawGrid();
   currentBlock.DrawBlock();
