@@ -5,6 +5,7 @@ Grid::Grid(){
   g_Row = 20;
   g_Col = 10;
   cellSize = 30;
+  colors = GetCellColors();
   Initialize();
 }
 
@@ -28,7 +29,19 @@ void Grid::PrintGrid(){
 void Grid::DrawGrid(){
   for(int row =0;row<g_Row;row++){
     for(int col =0;col<g_Col;col++){
-      DrawRectangle(col*cellSize,row*cellSize,cellSize-1,cellSize-1,DARKBLUE);
+      DrawRectangle(col*cellSize,row*cellSize,cellSize-1,cellSize-1,colors[grid[row][col]]);
     }
   }
+}
+
+//seal grid
+void Grid::SealGrid(int color,int row,int col){
+  grid[row][col] = color;
+}
+//if grid empty
+bool Grid::IsGridEmpty(int row,int col){
+  if(grid[row][col] != 0){
+    return true;
+  }
+  return false;
 }

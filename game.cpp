@@ -51,13 +51,33 @@ int Game::GetKeyboardInput(){
 
   return 0;
 }
+
+//if a grid if empty or not
+bool Game::IfBlockTaken(){
+  std::vector<Position> pos = currentBlock.GetPosition();
+  int rOffset = currentBlock.rowOffset;
+  int cOffset = currentBlock.colOffset;
+  int count= 0;
+  for(Position item : pos){
+    if( grid.IsGridEmpty(item.p_row+rOffset,item.p_col+cOffset)){
+      count++;
+    }
+  }
+  if(count == pos.size()){
+    return false;
+  }
+  return true;
+}
 //move blokc down
 
 void Game::MoveBlockDown(){
   currentBlock.Move(1,0);
-  if(currentBlock.IsOutsideWindow()){
-    std::cout<<"Bblock outside in down"<<std::endl;
+  if(currentBlock.IsOutsideWindow() || !IfBlockTaken()){
+    //std::cout<<"Bblock outside in down"<<std::endl;
     currentBlock.Move(-1,0);
+    currentBlock.SealBlock(grid);
+    currentBlock = nextBlock;
+    nextBlock = GetRandomBlock();
   }
 }
 void Game::MoveBlockLeft(){
@@ -81,7 +101,8 @@ void Game::MoveBlockRight(){
 void Game::RotateBlock(){
   currentBlock.ChangeRotationState();
   if(currentBlock.IsOutsideWindow()){
-    currentBlock.ChangeRotationState();
+    //std::cout<<"Rotated outside window"<<std::endl;
+    RotateBlock();
   }
 }
 
@@ -104,3 +125,6 @@ Block Game::GetRandomBlock(){
 std::vector<Block> Game::GetAllBlocks(){
   return {JBlock(),OBlock(),IBlock(),SBlock(),ZBlock(),LBlock(),TBlock()};
 }
+
+//check if time has correctly elapsed to move block
+

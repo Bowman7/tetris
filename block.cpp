@@ -41,9 +41,26 @@ void Block::RevertRotationState(){
 bool Block::IsOutsideWindow(){
   std::vector<Position> block = cells[RotationState];
   for(Position item : block){
+
     if((item.p_col+colOffset) < 0 || (item.p_col+colOffset) >= 10 || (item.p_row+rowOffset) >=  20){
       return true;
     }
   }
   return false;
 }
+//seal the block at the end
+void Block::SealBlock(Grid &grid){
+  std::vector<Position> block = cells[RotationState];
+  for(Position item : block){
+    grid.SealGrid(id,item.p_row+rowOffset,item.p_col+colOffset);
+  }
+  grid.PrintGrid();
+}
+//return pos
+
+std::vector<Position> Block::GetPosition(){
+  std::vector<Position> block = cells[RotationState];
+
+  return block;
+}
+

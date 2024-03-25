@@ -10,12 +10,12 @@ class Game{
   std::vector<Block>GetAllBlocks();
   Block GetRandomBlock();
   void GameDraw();
-
   void HandleEvent();
-   
+  void MoveBlockDown();
+  bool IfBlockTaken();
+  
  private:
   int GetKeyboardInput();
-  void MoveBlockDown();
   void MoveBlockLeft();
   void MoveBlockRight();
   void MoveBlockUp();
