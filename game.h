@@ -12,7 +12,6 @@ class Game{
   void GameDraw();
   void HandleEvent();
   void MoveBlockDown();
-  bool IfBlockTaken();
   
  private:
   int GetKeyboardInput();
@@ -20,9 +19,14 @@ class Game{
   void MoveBlockRight();
   void MoveBlockUp();
   void RotateBlock();
+  bool IsOutsideWindow();
+  void LockBlock();
+  bool BlockFits();
+  void ClearRow();
   
  private:
   std::vector<Block> blocks;
   Block currentBlock;
   Block nextBlock;
+  int completeRows;
 };

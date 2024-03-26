@@ -2,10 +2,11 @@
 #include<iostream>
 
 Game::Game(){
+  grid = Grid();
   blocks = GetAllBlocks();
   currentBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
-  grid = Grid();
+  completeRows =0;
 }
 
 Game::~Game(){
@@ -52,19 +53,44 @@ int Game::GetKeyboardInput(){
   return 0;
 }
 
-//if a grid if empty or not
-bool Game::IfBlockTaken(){
-  std::vector<Position> pos = currentBlock.GetPosition();
-  int rOffset = currentBlock.rowOffset;
-  int cOffset = currentBlock.colOffset;
-  int count= 0;
-  for(Position item : pos){
-    if( grid.IsGridEmpty(item.p_row+rOffset,item.p_col+cOffset)){
-      count++;
+//if outside
+bool Game::IsOutsideWindow(){
+  std::vector<Position> block = currentBlock.GetCellPos();
+  for(Position item : block){
+    if(grid.IsCellOutside(item.p_row,item.p_col)){
+      return true;
     }
   }
-  if(count == pos.size()){
-    return false;
+  return false;
+}
+
+//clear bottomrow
+void Game::ClearRow(){
+  grid.ClearRow(completeRows);
+}
+//lock block at the end
+void Game::LockBlock(){
+  std::vector<Position> pos = currentBlock.GetCellPos();
+  for(Position item : pos){
+    grid.grid[item.p_row][item.p_col]= currentBlock.id;
+  }
+  currentBlock = nextBlock;
+  nextBlock = GetRandomBlock();
+  int rows = grid.IsRowComplete();
+  if(rows > 0){
+    completeRows = rows;
+    ClearRow();
+    completeRows =0;
+  }
+  std::cout<<"Complete row: "<<rows<<std::endl;
+}
+//see if block fits
+bool Game::BlockFits(){
+  std::vector<Position> block = currentBlock.GetCellPos();
+  for(Position pos : block){
+    if(!grid.IsCellEmpty(pos.p_row,pos.p_col)){
+      return false;
+    }
   }
   return true;
 }
@@ -72,35 +98,33 @@ bool Game::IfBlockTaken(){
 
 void Game::MoveBlockDown(){
   currentBlock.Move(1,0);
-  if(currentBlock.IsOutsideWindow() || !IfBlockTaken()){
+  if(IsOutsideWindow() || BlockFits() == false){
     //std::cout<<"Bblock outside in down"<<std::endl;
     currentBlock.Move(-1,0);
-    currentBlock.SealBlock(grid);
-    currentBlock = nextBlock;
-    nextBlock = GetRandomBlock();
+    LockBlock();
   }
 }
 void Game::MoveBlockLeft(){
   currentBlock.Move(0,-1);
-  if(currentBlock.IsOutsideWindow()){
+  if(IsOutsideWindow() || BlockFits() == false){
     currentBlock.Move(0,1);
   }
 }
 void Game::MoveBlockUp(){
   currentBlock.Move(-1,0);
-  if(currentBlock.IsOutsideWindow()){
+  if(IsOutsideWindow() || BlockFits() == false){
     currentBlock.Move(1,0);
   }
 }
 void Game::MoveBlockRight(){
   currentBlock.Move(0,1);
-  if(currentBlock.IsOutsideWindow()){
+  if(IsOutsideWindow() || BlockFits() == false){
     currentBlock.Move(0,-1);
   }
 }
 void Game::RotateBlock(){
   currentBlock.ChangeRotationState();
-  if(currentBlock.IsOutsideWindow()){
+  if(IsOutsideWindow() || BlockFits() == false){
     //std::cout<<"Rotated outside window"<<std::endl;
     RotateBlock();
   }

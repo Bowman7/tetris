@@ -10,11 +10,22 @@ Block::Block(){
 }
 
 void Block::DrawBlock(){
-  std::vector<Position> block = cells[RotationState];
+  std::vector<Position> block = GetCellPos();
   for(Position item:block){
-    DrawRectangle((item.p_col+colOffset)*cellSize,(item.p_row+rowOffset)*cellSize,cellSize-1,cellSize-1,colors[id]);
+    DrawRectangle(item.p_col*cellSize,item.p_row*cellSize,cellSize-1,cellSize-1,colors[id]);
   }
   
+}
+
+//get cell pos
+std::vector<Position> Block::GetCellPos(){
+  std::vector<Position> movedTiles;
+  std::vector<Position> tile = cells[RotationState];
+  for(Position item : tile ){
+    Position newPos = Position(item.p_row+rowOffset,item.p_col+colOffset);
+    movedTiles.push_back(newPos);
+  }
+  return movedTiles;
 }
 //move
 void Block::Move(int row,int col){
@@ -28,39 +39,5 @@ void Block::ChangeRotationState(){
     RotationState = 0;
   }
   RotationState += 1;
-}
-
-void Block::RevertRotationState(){
-  if(RotationState == 0){
-    RotationState = 3;
-  }
-  RotationState -= 1;
-}
-//check if the blockis outside the play area
-
-bool Block::IsOutsideWindow(){
-  std::vector<Position> block = cells[RotationState];
-  for(Position item : block){
-
-    if((item.p_col+colOffset) < 0 || (item.p_col+colOffset) >= 10 || (item.p_row+rowOffset) >=  20){
-      return true;
-    }
-  }
-  return false;
-}
-//seal the block at the end
-void Block::SealBlock(Grid &grid){
-  std::vector<Position> block = cells[RotationState];
-  for(Position item : block){
-    grid.SealGrid(id,item.p_row+rowOffset,item.p_col+colOffset);
-  }
-  grid.PrintGrid();
-}
-//return pos
-
-std::vector<Position> Block::GetPosition(){
-  std::vector<Position> block = cells[RotationState];
-
-  return block;
 }
 

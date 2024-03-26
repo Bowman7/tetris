@@ -9,12 +9,16 @@ class Grid{
   void Initialize();
   void PrintGrid();
   void DrawGrid();
-  void SealGrid(int,int,int);
-  bool IsGridEmpty(int,int);
+  bool IsCellOutside(int,int);
   std::vector<Color> colors;
+  int grid[20][10];
+  bool IsCellEmpty(int,int);
+  int IsRowComplete();
+  int complete;
+  void ClearRow(int);
+  void MoveRow(int);
   
  private:
-  int grid[20][10];
   int g_Row;
   int g_Col;
   int cellSize;

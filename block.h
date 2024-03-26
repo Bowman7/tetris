@@ -11,10 +11,8 @@ public:
   void DrawBlock();
   void Move(int,int);
   void ChangeRotationState();
-  bool IsOutsideWindow();
-  void RevertRotationState();
-  void SealBlock(Grid &grid);
-  std::vector<Position> GetPosition();
+  std::vector<Position> GetCellPos();
+  
   
 public:
   int id;//on this basis color is assigned
