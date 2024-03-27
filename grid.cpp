@@ -6,7 +6,6 @@ Grid::Grid(){
   g_Col = 10;
   cellSize = 30;
   colors = GetCellColors();
-  complete =0;
   Initialize();
 }
 
@@ -51,37 +50,44 @@ bool Grid::IsCellEmpty(int row,int col){
   return false;
 }
 
-//check if row is complete
-int Grid::IsRowComplete(){
-  complete = 0;
-  for(int row =g_Row-1;row>=0;row-- ){
-    for(int col =0;col<g_Col;col++){
-      if(grid[row][col] == 0){
-	return complete;
-      }
+
+//check if row is full
+
+bool Grid::IsRowFull(int row){
+  for(int col = 0;col<g_Col;col++){
+    if(grid[row][col] == 0){
+      return false;
     }
-    complete++;
   }
-  return complete;
+
+  return true;
 }
-//clear row in grid
-void Grid::ClearRow(int completeRows){
-  for(int row =g_Row -1;row>(g_Row-completeRows-1);row--){
-    for(int col = 0;col<g_Col;col++){
-      grid[row][col] =0;
-    }
+
+//clear row
+
+void Grid::ClearRow(int row){
+  for(int col=0;col<g_Col;col++){
+    grid[row][col] =0 ;
   }
-  MoveRow(completeRows);
 }
-//move rows
-void Grid::MoveRow(int crow){
-  for(int row = g_Row-crow-1;row>0;row--){
-    for(int col = 0;col<g_Col;col++){
-      if(grid[row][col] != 0){
-	grid[row+crow][col+crow] = grid[row][col];
-	grid[row][col] = 0;
-      }
-      
-    }
+//move row down
+void Grid::MoveRowDown(int row,int completed){
+  for(int col=0;col<g_Col;col++){
+    grid[row+completed][col] = grid[row][col];
+    grid[row][col] = 0;
   }
+}
+//clear full rows
+
+int Grid::ClearFullRows(){
+  int completed =0 ;
+  for(int row =g_Row-1;row>0;row--){
+      if(IsRowFull(row)){
+	ClearRow(row);
+	completed++;
+      }else if(completed > 0){
+	MoveRowDown(row,completed);
+      }
+  }
+  return completed;
 }

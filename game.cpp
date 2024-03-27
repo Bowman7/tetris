@@ -76,13 +76,8 @@ void Game::LockBlock(){
   }
   currentBlock = nextBlock;
   nextBlock = GetRandomBlock();
-  int rows = grid.IsRowComplete();
-  if(rows > 0){
-    completeRows = rows;
-    ClearRow();
-    completeRows =0;
-  }
-  std::cout<<"Complete row: "<<rows<<std::endl;
+  grid.ClearFullRows();
+  
 }
 //see if block fits
 bool Game::BlockFits(){

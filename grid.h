@@ -13,10 +13,10 @@ class Grid{
   std::vector<Color> colors;
   int grid[20][10];
   bool IsCellEmpty(int,int);
-  int IsRowComplete();
-  int complete;
+  int ClearFullRows();
+  void MoveRowDown(int,int);
   void ClearRow(int);
-  void MoveRow(int);
+  bool IsRowFull(int);
   
  private:
   int g_Row;
