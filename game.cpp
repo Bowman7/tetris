@@ -7,15 +7,29 @@ Game::Game(){
   currentBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
   completeRows =0;
+  GameOver = false;
 }
 
 Game::~Game(){
 
 }
+//reset canvas
+void Game::Reset(){
+  grid.Initialize();
+  blocks = GetAllBlocks();
+  currentBlock = GetRandomBlock();
+  nextBlock = GetRandomBlock();
+  
+}
 
 //handle event
 void Game::HandleEvent(){
   int choice = GetKeyboardInput();
+
+  if(GameOver && choice !=0){
+    GameOver = false;
+    Reset();
+  }
   switch(choice){
   case KEY_S:
     MoveBlockDown();break;
@@ -75,6 +89,9 @@ void Game::LockBlock(){
     grid.grid[item.p_row][item.p_col]= currentBlock.id;
   }
   currentBlock = nextBlock;
+  if(BlockFits()==false){
+    GameOver = true;
+  }
   nextBlock = GetRandomBlock();
   grid.ClearFullRows();
   
@@ -92,17 +109,21 @@ bool Game::BlockFits(){
 //move blokc down
 
 void Game::MoveBlockDown(){
-  currentBlock.Move(1,0);
-  if(IsOutsideWindow() || BlockFits() == false){
-    //std::cout<<"Bblock outside in down"<<std::endl;
-    currentBlock.Move(-1,0);
-    LockBlock();
+  if(!GameOver){
+    currentBlock.Move(1,0);
+    if(IsOutsideWindow() || BlockFits() == false){
+      //std::cout<<"Bblock outside in down"<<std::endl;
+      currentBlock.Move(-1,0);
+      LockBlock();
+    }
   }
 }
 void Game::MoveBlockLeft(){
-  currentBlock.Move(0,-1);
-  if(IsOutsideWindow() || BlockFits() == false){
-    currentBlock.Move(0,1);
+  if(!GameOver){
+    currentBlock.Move(0,-1);
+    if(IsOutsideWindow() || BlockFits() == false){
+      currentBlock.Move(0,1);
+    }
   }
 }
 void Game::MoveBlockUp(){
@@ -112,16 +133,20 @@ void Game::MoveBlockUp(){
   }
 }
 void Game::MoveBlockRight(){
-  currentBlock.Move(0,1);
-  if(IsOutsideWindow() || BlockFits() == false){
-    currentBlock.Move(0,-1);
+  if(!GameOver){
+    currentBlock.Move(0,1);
+    if(IsOutsideWindow() || BlockFits() == false){
+      currentBlock.Move(0,-1);
+    }
   }
 }
 void Game::RotateBlock(){
-  currentBlock.ChangeRotationState();
-  if(IsOutsideWindow() || BlockFits() == false){
-    //std::cout<<"Rotated outside window"<<std::endl;
-    RotateBlock();
+  if(!GameOver){
+    currentBlock.ChangeRotationState();
+    if(IsOutsideWindow() || BlockFits() == false){
+      //std::cout<<"Rotated outside window"<<std::endl;
+      RotateBlock();
+    }
   }
 }
 

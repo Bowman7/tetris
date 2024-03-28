@@ -12,6 +12,8 @@ class Game{
   void GameDraw();
   void HandleEvent();
   void MoveBlockDown();
+  bool GameOver;
+  void Reset();
   
  private:
   int GetKeyboardInput();
@@ -23,6 +25,7 @@ class Game{
   void LockBlock();
   bool BlockFits();
   void ClearRow();
+  
   
  private:
   std::vector<Block> blocks;
