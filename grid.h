@@ -22,4 +22,6 @@ class Grid{
   int g_Row;
   int g_Col;
   int cellSize;
+  int offsetX;
+  int offsetY;
 };

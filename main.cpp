@@ -2,8 +2,8 @@
 #include"game.h"
 #include<iostream>
 
-#define width 300
-#define height 600
+#define width 450
+#define height 620
 
 double elapsedTime = 0.0;
 
@@ -29,6 +29,9 @@ int main(){
   //JBlock block = JBlock();
 
   Game game = Game();
+
+  //font
+  Font font = LoadFontEx("font/arcade.TTF",64,0,0);
   while(!WindowShouldClose()){
 
     //update
@@ -40,6 +43,16 @@ int main(){
     //draw
     BeginDrawing();
     ClearBackground(SKYBLUE);
+    //draw score
+    DrawTextEx(font,"Score",{320,40},38,2,WHITE);
+    DrawTextEx(font,"Next",{320,180},38,2,WHITE);
+
+    //draw score
+    char scoreText[10];
+    sprintf(scoreText,"%d",game.score);
+    Vector2 textSize = MeasureTextEx(font,scoreText,38,2);
+
+    DrawTextEx(font,scoreText,{320+(80-textSize.x)/2,65},45,2,BLACK);
     
     game.GameDraw();
 

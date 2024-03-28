@@ -7,12 +7,21 @@ Block::Block(){
   cellSize = 30;
   rowOffset = 0;
   colOffset = 0;
+  offsetX = 10 ;
+  offsetY = 10;
 }
 
 void Block::DrawBlock(){
   std::vector<Position> block = GetCellPos();
   for(Position item:block){
-    DrawRectangle(item.p_col*cellSize,item.p_row*cellSize,cellSize-1,cellSize-1,colors[id]);
+    DrawRectangle(item.p_col*cellSize+offsetX,item.p_row*cellSize+offsetY,cellSize-1,cellSize-1,colors[id]);
+  }
+  
+}
+void Block::DrawNextBlock(){
+  std::vector<Position> block = GetCellPos();
+  for(Position item:block){
+    DrawRectangle(item.p_col*cellSize+250,item.p_row*cellSize+300,cellSize-1,cellSize-1,colors[id]);
   }
   
 }

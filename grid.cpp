@@ -7,6 +7,8 @@ Grid::Grid(){
   cellSize = 30;
   colors = GetCellColors();
   Initialize();
+  offsetX = 10;
+  offsetY = 10;
 }
 
 void Grid::Initialize(){
@@ -29,7 +31,7 @@ void Grid::PrintGrid(){
 void Grid::DrawGrid(){
   for(int row =0;row<g_Row;row++){
     for(int col =0;col<g_Col;col++){
-      DrawRectangle(col*cellSize,row*cellSize,cellSize-1,cellSize-1,colors[grid[row][col]]);
+      DrawRectangle(col*cellSize+offsetX,row*cellSize+offsetY,cellSize-1,cellSize-1,colors[grid[row][col]]);
     }
   }
 }

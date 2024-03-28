@@ -14,6 +14,8 @@ class Game{
   void MoveBlockDown();
   bool GameOver;
   void Reset();
+  int score;
+  void AddScore(int);
   
  private:
   int GetKeyboardInput();

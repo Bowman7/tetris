@@ -8,6 +8,7 @@ Game::Game(){
   nextBlock = GetRandomBlock();
   completeRows =0;
   GameOver = false;
+  score = 0;
 }
 
 Game::~Game(){
@@ -32,6 +33,7 @@ void Game::HandleEvent(){
   }
   switch(choice){
   case KEY_S:
+    score+=1;
     MoveBlockDown();break;
   case KEY_A:
     MoveBlockLeft();break;
@@ -82,6 +84,20 @@ bool Game::IsOutsideWindow(){
 void Game::ClearRow(){
   grid.ClearRow(completeRows);
 }
+//add score
+void Game::AddScore(int val){
+  switch(val){
+  case 1:
+    score += 100;break;
+  case 2:
+    score += 200;break;
+  case 3:
+    score += 500;break;
+  }
+  score += 1;
+  
+  
+}
 //lock block at the end
 void Game::LockBlock(){
   std::vector<Position> pos = currentBlock.GetCellPos();
@@ -93,7 +109,8 @@ void Game::LockBlock(){
     GameOver = true;
   }
   nextBlock = GetRandomBlock();
-  grid.ClearFullRows();
+  int val = grid.ClearFullRows();
+  AddScore(val);
   
 }
 //see if block fits
@@ -153,6 +170,7 @@ void Game::RotateBlock(){
 void Game::GameDraw(){
   grid.DrawGrid();
   currentBlock.DrawBlock();
+  nextBlock.DrawNextBlock();
 }
 Block Game::GetRandomBlock(){
   if(blocks.empty()){

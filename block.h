@@ -9,6 +9,7 @@ class Block{
 public:
   Block();
   void DrawBlock();
+  void DrawNextBlock();
   void Move(int,int);
   void ChangeRotationState();
   std::vector<Position> GetCellPos();
@@ -24,4 +25,6 @@ private:
   int RotationState;//the rotation states 
   std::vector<Color> colors;
   int cellSize;
+  int offsetX;
+  int offsetY;
 };
